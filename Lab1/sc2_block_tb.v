@@ -7,7 +7,7 @@ module sc2_test;
 
 	initial begin
 		$dumpfile("sc2.vcd");
-		$dumpvars(0,sc2_test);
+		$dumpvars(0, sc2_test);
 
 		a_in = 0; b_in = 0; c_in = 0; # 10;
 		a_in = 0; b_in = 0; c_in = 1; # 10;
