@@ -27,10 +27,8 @@ module mux4_test;
     mux4 m4(out, A, B, C, D, control);
 
     // you really should be using gtkwave instead
-    /*
     initial begin
         $display("A B C D s o");
         $monitor("%d %d %d %d %d %d (at time %t)", A, B, C, D, control, out, $time);
     end
-    */
 endmodule // mux4_test
