@@ -1,9 +1,43 @@
 //implement your 32-bit ALU
 module alu32(out, overflow, zero, negative, A, B, control);
-    output [31:0] out;
-    output        overflow, zero, negative;
-    input  [31:0] A, B;
-    input   [2:0] control;
-
-
-endmodule // alu32
+	output [31:0] out;
+	output overflow, zero, negative;
+	input [31:0] A, B;
+	input [2:0] control;
+	wire w0, w1, w2, w3, w4, w5, w6, w7, w8, w9, w10, w11, w12, w13, w14, w15, w16, w17, w18, w19, w20, w21, w22, w23, w24, w25, w26, w27, w28, w29, w30, w31;
+	alu1 alu_0(out[0], w0, A[0], B[0], control[0], control);
+	alu1 alu_1(out[1], w1, A[1], B[1], w0, control);
+	alu1 alu_2(out[2], w2, A[2], B[2], w1, control);
+	alu1 alu_3(out[3], w3, A[3], B[3], w2, control);
+	alu1 alu_4(out[4], w4, A[4], B[4], w3, control);
+	alu1 alu_5(out[5], w5, A[5], B[5], w4, control);
+	alu1 alu_6(out[6], w6, A[6], B[6], w5, control);
+	alu1 alu_7(out[7], w7, A[7], B[7], w6, control);
+	alu1 alu_8(out[8], w8, A[8], B[8], w7, control);
+	alu1 alu_9(out[9], w9, A[9], B[9], w8, control);
+	alu1 alu_10(out[10], w10, A[10], B[10], w9, control);
+	alu1 alu_11(out[11], w11, A[11], B[11], w10, control);
+	alu1 alu_12(out[12], w12, A[12], B[12], w11, control);
+	alu1 alu_13(out[13], w13, A[13], B[13], w12, control);
+	alu1 alu_14(out[14], w14, A[14], B[14], w13, control);
+	alu1 alu_15(out[15], w15, A[15], B[15], w14, control);
+	alu1 alu_16(out[16], w16, A[16], B[16], w15, control);
+	alu1 alu_17(out[17], w17, A[17], B[17], w16, control);
+	alu1 alu_18(out[18], w18, A[18], B[18], w17, control);
+	alu1 alu_19(out[19], w19, A[19], B[19], w18, control);
+	alu1 alu_20(out[20], w20, A[20], B[20], w19, control);
+	alu1 alu_21(out[21], w21, A[21], B[21], w20, control);
+	alu1 alu_22(out[22], w22, A[22], B[22], w21, control);
+	alu1 alu_23(out[23], w23, A[23], B[23], w22, control);
+	alu1 alu_24(out[24], w24, A[24], B[24], w23, control);
+	alu1 alu_25(out[25], w25, A[25], B[25], w24, control);
+	alu1 alu_26(out[26], w26, A[26], B[26], w25, control);
+	alu1 alu_27(out[27], w27, A[27], B[27], w26, control);
+	alu1 alu_28(out[28], w28, A[28], B[28], w27, control);
+	alu1 alu_29(out[29], w29, A[29], B[29], w28, control);
+	alu1 alu_30(out[30], w30, A[30], B[30], w29, control);
+	alu1 alu_31(out[31], w31, A[31], B[31], w30, control);
+	assign negative = out[31];
+	assign overflow = (w31 ^ w30) & control[1];
+	assign zero = ~|out;
+endmodule
