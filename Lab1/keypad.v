@@ -2,7 +2,7 @@ module keypad(valid, number, a, b, c, d, e, f, g);
 	output valid;
 	output [3:0] number;
 	input a, b, c, d, e, f, g;
-	wire a_or_c, b_or_c, d_or_f, a_and_f, b_and_e, c_and_e, dfac, dbc;
+	wire a_or_c, b_or_c, d_or_f, a_and_f, b_and_e, c_and_e, dfac, dbc, not_valid, pressed, pv;
 
 	or o0(a_or_c, a, c);
 	or o1(b_or_c, b, c);
@@ -11,7 +11,10 @@ module keypad(valid, number, a, b, c, d, e, f, g);
 	and a1(b_and_e, b, e);
 	and a2(c_and_e, c, e);
 
-	and a3(valid, g, a_or_c);
+	assign pressed = !a & !b & !c & !d & !e & !f & !g;
+	and a3(not_valid, g, a_or_c);
+	not n0(pv, not_valid);
+	and a7(valid, pv, pressed);
 
 	and a4(dfac, d_or_f, a_or_c);
 	or o3(number[0], b_and_e, dfac);
