@@ -9,10 +9,10 @@ module logicunit_test;
 		$dumpfile("logicunit.vcd");
 		$dumpvars(0, logicunit_test);
 
-		# 16 control = 1;
-		# 16 control = 2;
-		# 16 control = 3;
-		# 16 $finish;
+		# 4 control = 1;
+		# 4 control = 2;
+		# 4 control = 3;
+		# 4 $finish;
 	end
 
 	wire out;

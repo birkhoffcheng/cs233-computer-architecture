@@ -12,14 +12,14 @@ module alu1_test;
 		$dumpfile("alu1.vcd");
 		$dumpvars(0, alu1_test);
 
-		# 16 control = 1;
-		# 16 control = 2;
-		# 16 control = 3;
-		# 16 control = 4;
-		# 16 control = 5;
-		# 16 control = 6;
-		# 16 control = 7;
-		# 16 $finish;
+		# 8 control = 1;
+		# 8 control = 2;
+		# 8 control = 3;
+		# 8 control = 4;
+		# 8 control = 5;
+		# 8 control = 6;
+		# 8 control = 7;
+		# 8 $finish;
 	end
 
 	wire out, cout;
