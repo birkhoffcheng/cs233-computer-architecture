@@ -8,21 +8,20 @@ module reg_writer(done, regnum, direction, go, clock, reset);
 
 	wire sGarbage, sStart, sUp1, sUp2, sUp3, sUp4, sDown1, sDown2, sDown3, sDown4, sDone;	
 
-
 	wire sGarbage_next = reset | sGarbage & ~go;
-	wire sStart_next = (sStart & go | sGarbage & go | sDone & go);
+	wire sStart_next = ~reset & (sStart | sGarbage | sDone) & go;
 
-	wire sUp1_next = sStart & direction & ~go;
-	wire sUp2_next = sUp1;
-	wire sUp3_next = sUp2;
-	wire sUp4_next = sUp3;
+	wire sUp1_next = ~reset & sStart & direction & ~go & ~sGarbage;
+	wire sUp2_next = ~reset & sUp1 & ~sGarbage & ~sStart;
+	wire sUp3_next = ~reset & sUp2 & ~sGarbage & ~sStart;
+	wire sUp4_next = ~reset & sUp3 & ~sGarbage & ~sStart;
 
-	wire sDown1_next = sStart & ~direction & ~go;
-	wire sDown2_next = sDown1;
-	wire sDown3_next = sDown2;
-	wire sDown4_next = sDown3;
+	wire sDown1_next = ~reset & sStart & ~direction & ~go & ~sGarbage;
+	wire sDown2_next = ~reset & sDown1 & ~sGarbage & ~sStart;
+	wire sDown3_next = ~reset & sDown2 & ~sGarbage & ~sStart;
+	wire sDown4_next = ~reset & sDown3 & ~sGarbage & ~sStart;
 	 
-	wire sDone_next = ((sUp4 | sDown4) | (sDone & ~go));
+	wire sDone_next = ~reset & ((sUp4 | sDown4) | (sDone & ~go));
 
 	dffe fsGarbage(sGarbage, sGarbage_next, clock, 1'b1, 1'b0);
 	dffe fsStart(sStart, sStart_next, clock, 1'b1, 1'b0);
