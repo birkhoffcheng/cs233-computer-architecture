@@ -68,4 +68,3 @@ module dffe(q, d, clk, enable, reset);
 	 if ((reset == 1'b0) && (enable == 1'b1))
 	   q <= d;
 endmodule // dffe
-

@@ -9,20 +9,20 @@ module reg_writer(done, regnum, direction, go, clock, reset);
 	wire sGarbage, sStart, sUp1, sUp2, sUp3, sUp4, sDown1, sDown2, sDown3, sDown4, sDone;	
 
 
-	wire sGarbage_next = sGarbage & ~go;
+	wire sGarbage_next = reset | sGarbage & ~go;
 	wire sStart_next = (sStart & go | sGarbage & go | sDone & go);
 
-	wire sUp1_next;
+	wire sUp1_next = sStart & direction & ~go;
 	wire sUp2_next = sUp1;
 	wire sUp3_next = sUp2;
 	wire sUp4_next = sUp3;
 
-	wire sDown1_next = sStart;
+	wire sDown1_next = sStart & ~direction & ~go;
 	wire sDown2_next = sDown1;
 	wire sDown3_next = sDown2;
 	wire sDown4_next = sDown3;
 	 
-	wire sDone_next = ((sUp4 | sDown4)  | (sDone & ~go));
+	wire sDone_next = ((sUp4 | sDown4) | (sDone & ~go));
 
 	dffe fsGarbage(sGarbage, sGarbage_next, clock, 1'b1, 1'b0);
 	dffe fsStart(sStart, sStart_next, clock, 1'b1, 1'b0);
@@ -39,7 +39,7 @@ module reg_writer(done, regnum, direction, go, clock, reset);
 	
 	dffe fsDone(sDone, sDone_next, clock, 1'b1, 1'b0);
 
-	assign done = sUp1 | sUp2 | sUp3 | sUp4 | sDone ;
+	assign done = sDone;
 	assign regnum = sStart ? 8 :
 			sDown1 ? 7 :
 			sDown2 ? 6 :
