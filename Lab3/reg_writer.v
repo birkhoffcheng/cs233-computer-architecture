@@ -24,19 +24,19 @@ module reg_writer(done, regnum, direction, go, clock, reset);
 	wire sDone_next = ~reset & ((sUp4 | sDown4) | (sDone & ~go));
 
 	dffe fsGarbage(sGarbage, sGarbage_next, clock, 1'b1, 1'b0);
-	dffe fsStart(sStart, sStart_next, clock, 1'b1, reset);
+	dffe fsStart(sStart, sStart_next, clock, 1'b1, 1'b0);
 
-	dffe fsUp1(sUp1, sUp1_next, clock, 1'b1, reset);
-	dffe fsUp2(sUp2, sUp2_next, clock, 1'b1, reset);
-	dffe fsUp3(sUp3, sUp3_next, clock, 1'b1, reset);
-	dffe fsUp4(sUp4, sUp4_next, clock, 1'b1, reset);
+	dffe fsUp1(sUp1, sUp1_next, clock, 1'b1, 1'b0);
+	dffe fsUp2(sUp2, sUp2_next, clock, 1'b1, 1'b0);
+	dffe fsUp3(sUp3, sUp3_next, clock, 1'b1, 1'b0);
+	dffe fsUp4(sUp4, sUp4_next, clock, 1'b1, 1'b0);
 	
-	dffe fsDown1(sDown1, sDown1_next, clock, 1'b1, reset);
-	dffe fsDown2(sDown2, sDown2_next, clock, 1'b1, reset);
-	dffe fsDown3(sDown3, sDown3_next, clock, 1'b1, reset);
-	dffe fsDown4(sDown4, sDown4_next, clock, 1'b1, reset);
+	dffe fsDown1(sDown1, sDown1_next, clock, 1'b1, 1'b0);
+	dffe fsDown2(sDown2, sDown2_next, clock, 1'b1, 1'b0);
+	dffe fsDown3(sDown3, sDown3_next, clock, 1'b1, 1'b0);
+	dffe fsDown4(sDown4, sDown4_next, clock, 1'b1, 1'b0);
 	
-	dffe fsDone(sDone, sDone_next, clock, 1'b1, reset);
+	dffe fsDone(sDone, sDone_next, clock, 1'b1, 1'b0);
 
 	assign done = sDone;
 	assign regnum = sStart ? 8 :
