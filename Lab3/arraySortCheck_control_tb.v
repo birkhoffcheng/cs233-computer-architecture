@@ -1,5 +1,5 @@
 module arraySortCheck_control_test;
-    reg       clock = 0;
+    reg clock = 0;
     always #1 clock = !clock;
 
     reg go = 0;
@@ -16,7 +16,7 @@ module arraySortCheck_control_test;
     initial begin
         $dumpfile("arraySortCheck_control.vcd");
         $dumpvars(0, arraySortCheck_control_test);
-        #2      reset = 0;
+        #2 reset = 0;
 
 	// First, lets give an initial value for all
 	// registers equal to their 'index' in the register file
@@ -48,10 +48,17 @@ module arraySortCheck_control_test;
 	circuit.rf.r[11] <= 32'd7;
 	# 2 array = 7; length = 3; go = 1;
 	# 10 go = 0;
-  # 20
-        // Add your own testcases here!
+	# 20
+    // Add your own testcases here!
+	# 10 go = 1; array = 17; length = 1;
+	# 4 go = 0;
+	# 20
 
-        #10 $finish;
+	# 10 go = 1; array = 19; length = 0;
+	# 4 go = 0;
+	# 20
+
+	# 10 $finish;
     end
 
 endmodule
