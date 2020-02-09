@@ -3,23 +3,25 @@ module arraySortCheck_control(sorted, done, load_input, load_index, select_index
 	input go, inversion_found, end_of_array, zero_length_array;
 	input clock, reset;
 
-	wire sGarbage, sDN, sIncIndex, sTrue, sFalse;
+	wire garbage, prep, waiting, increment_index, return_true, return_false;
 
-	wire sGarbage_next = reset | ((sTrue | sFalse) & go) | (sGarbage & ~go);
-	wire sDN_next = ~reset & ((sGarbage & go) | sIncIndex);
-	wire sIncIndex_next = ~reset & sDN & ~inversion_found & ~end_of_array & ~zero_length_array;
-	wire sTrue_next = ~reset & ((sDN & (end_of_array | zero_length_array)) | (sTrue & ~go));
-	wire sFalse_next = ~reset & ((sDN & inversion_found) | (sFalse & ~go));
+	wire garbage_next = reset | (garbage & ~go);
+	wire prep_next = ~reset & (((return_true | return_false | garbage | prep) & go));
+	wire waiting_next = ~reset & ((prep & ~go) | increment_index);
+	wire increment_index_next = ~reset & waiting & ~inversion_found & ~end_of_array & ~zero_length_array;
+	wire return_true_next = ~reset & ((waiting & (end_of_array | zero_length_array)) | (return_true & ~go));
+	wire return_false_next = ~reset & ((inversion_found & ~end_of_array & ~zero_length_array) | (return_false & ~go));
 
-	dffe d0(sGarbage, sGarbage_next, clock, 1'b1, 1'b0);
-	dffe d1(sDN, sDN_next, clock, 1'b1, 1'b0);
-	dffe d2(sIncIndex, sIncIndex_next, clock, 1'b1, 1'b0);
-	dffe d3(sTrue, sTrue_next, clock, 1'b1, 1'b0);
-	dffe d4(sFalse, sFalse_next, clock, 1'b1, 1'b0);
+	dffe d0(garbage, garbage_next, clock, 1'b1, 1'b0);
+	dffe d1(waiting, waiting_next, clock, 1'b1, 1'b0);
+	dffe d2(increment_index, increment_index_next, clock, 1'b1, 1'b0);
+	dffe d3(return_true, return_true_next, clock, 1'b1, 1'b0);
+	dffe d4(return_false, return_false_next, clock, 1'b1, 1'b0);
+	dffe d5(prep, prep_next, clock, 1'b1, 1'b0);
 
-	assign sorted = sTrue;
-	assign done = sTrue | sFalse;
-	assign load_input = sGarbage;
-	assign load_index = sGarbage | sIncIndex;
-	assign select_index = sIncIndex;
+	assign sorted = return_true;
+	assign done = return_true | return_false;
+	assign load_input = prep;
+	assign load_index = prep | increment_index;
+	assign select_index = increment_index;
 endmodule
