@@ -13,7 +13,8 @@ module decoder_test;
     end
 
     // use gtkwave to test correctness
-    wire [2:0] alu_src2, alu_op;
+    wire [2:0] alu_op;
+    wire [1:0] alu_src2; 
     wire       rd_src, writeenable, except;
     mips_decode decoder(rd_src, writeenable, alu_src2, alu_op, except,
                         opcode, funct);
