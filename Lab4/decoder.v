@@ -11,7 +11,8 @@
 
 module mips_decode(rd_src, writeenable, alu_src2, alu_op, except, opcode, funct);
     output       rd_src, writeenable, except;
-    output [2:0] alu_src2, alu_op;
+    output [1:0] alu_src2;
+    output [2:0] alu_op;
     input  [5:0] opcode, funct;
 
 endmodule // mips_decode
