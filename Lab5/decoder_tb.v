@@ -48,4 +48,9 @@ module decoder_test;
 	wire [1:0] control_type;
 	wire mem_read, word_we, byte_we, byte_load, slt, lui, addm;
 	mips_decode decoder(alu_op, writeenable, rd_src, alu_src2, except, control_type, mem_read, word_we, byte_we, byte_load, slt, lui, addm, opcode, funct, zero);
+	
+	initial begin
+		$display("opcode funct alu_op rd_src alu_src2 writeenable except control_type mem_read word_we byte_we byte_load slt lui addm zero");
+		$monitor("%x\t%x\t%x\t%x\t%x\t%x\t%x\t%x\t\t%x\t%x\t%x\t%x\t%x    %x    %x    %x\t(at time %t)", opcode, funct, alu_op, rd_src, alu_src2, writeenable, except, control_type, mem_read, word_we, byte_we, byte_load, slt, lui, addm, zero, $time);
+	end
 endmodule // decoder_test
