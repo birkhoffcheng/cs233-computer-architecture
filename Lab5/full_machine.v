@@ -30,7 +30,7 @@ module full_machine(except, clock, reset);
 	mux2v #(32) addm_mux(rdData, not_addm, addm_out, addm);
 	mux2v #(5) rd_src_mux(rdAddr, inst[15:11], inst[20:16], rd_src);
 	mux2v #(32) lui_mux(not_addm, alu_or_mem, {inst[15:0], 16'b0}, lui);
-	mux2v #(32) slt_mux(alu_or_slt, alu_out, {31'b0, (negative & ~overflow)}, slt);
+	mux2v #(32) slt_mux(alu_or_slt, alu_out, {31'b0, (negative ^ overflow)}, slt);
 	mux2v #(32) mem_read_mux(alu_or_mem, alu_or_slt, mem_out, mem_read);
 	mux2v #(32) byte_load_mux(mem_out, data_out, {24'b0, byte_out}, byte_load);
 	mux4v #(32) alu_src2_mux(alu_src2_in, rtData, {{16{inst[15]}}, inst[15:0]}, {16'b0, inst[15:0]}, 32'b0, alu_src2);
