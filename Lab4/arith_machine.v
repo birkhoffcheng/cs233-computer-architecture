@@ -11,7 +11,7 @@ module arith_machine(except, clock, reset);
 	wire [31:0] inst;
 	wire [31:0] PC, next_PC;
 	wire [31:0] rsData, rtData, rdData;
-	wire [4:0] rsAddr, rtAddr, rdAddr;
+	wire [4:0] rdAddr;
 	wire writeenable, rd_src;
 	wire [31:0] alu_in_b, sign_extended_immediate, zero_extended_immediate;
 	wire [1:0] alu_src2;

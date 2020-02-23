@@ -41,7 +41,7 @@ module mips_decode(alu_op, writeenable, rd_src, alu_src2, except, control_type, 
 
 	assign alu_src2 = (opcode == `OP_OTHER0 & funct >= `OP0_ADD & funct <= `OP0_NOR | opcode == `OP_BEQ | opcode == `OP_BNE | opcode == `OP_J | opcode == `OP_LUI | opcode == `OP_OTHER0 & (funct == `OP0_JR | funct == `OP0_SLT)) ? 2'b00 :
 	(opcode == `OP_ADDI | opcode == `OP_ADDIU | opcode == `OP_LW | opcode == `OP_LBU | opcode == `OP_SW | opcode == `OP_SB) ? 2'b01 :
-	(opcode == `OP_ANDI | opcode == `OP_ORI | opcode == `OP_XORI) ? 2'b10 : 2'b00;
+	(opcode == `OP_ANDI | opcode == `OP_ORI | opcode == `OP_XORI) ? 2'b10 : 2'b11;
 
 	assign alu_op = (opcode == `OP_ADDI | opcode == `OP_OTHER0 & (funct == `OP0_ADD | funct == `OP0_ADDM) | opcode == `OP_LW | opcode == `OP_LBU | opcode == `OP_SW | opcode == `OP_SB) ? `ALU_ADD :
 	(opcode == `OP_ADDIU | opcode == `OP_OTHER0 & funct == `OP0_ADDU) ? `ALU_ADDU :
