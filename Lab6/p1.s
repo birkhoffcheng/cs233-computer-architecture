@@ -34,7 +34,7 @@ for_start:
 for_done:
 	blt		$t0, $a1, ret_alp1	# if $t0 < $a1 then return alert_level + 1
 	beq		$t0, $a1, ret_al	# if $t0 == $a1 then return alert_level
-	sub 	$v0, $a2, 1			# else $v0 = alert_level - 1
+	addi 	$v0, $a2, -1		# else $v0 = alert_level - 1
 	jr		$ra					# return
 ret_alp1:
 	addi	$v0, $a2, 1			# $v0 = alert_level + 1
