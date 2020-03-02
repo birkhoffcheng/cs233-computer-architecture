@@ -80,7 +80,7 @@ end_for_one:
 
 .globl markov_chain
 markov_chain:
-	sub		$sp, $sp, 24	# $sp = $sp - 20
+	sub		$sp, $sp, 24
 	sw		$ra, 0($sp)
 	sw		$s0, 4($sp)
 	sw		$s1, 8($sp)
@@ -112,5 +112,5 @@ done_for:
 	lw		$s2, 12($sp)
 	lw		$s3, 16($sp)
 	lw		$s4, 20($sp)
-	add		$sp, $sp, 24	# $sp = $sp + 20
+	add		$sp, $sp, 24
 	jr		$ra
