@@ -5,8 +5,9 @@
 ########################################################################
 # typedef struct TreeNode {
 #     struct TreeNode* left;
+#     struct TreeNode* center;
 #     struct TreeNode* right;
-#     short value;
+#     char value;
 # } TreeNode;
 .data
     g_node: 

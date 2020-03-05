@@ -40,6 +40,10 @@ toggle_light:
 #     if (row >= num_rows || col >= num_cols) {
 #          return board_done(num_rows,num_cols,puzzle->board);
 #     }
+#
+#     if (puzzle->clue[row*num_cols + col]) {
+#          return solve(puzzle,solution, next_row, (col+1) % num_cols);
+#     }
 # 
 #     for(char actions = 0; actions < num_colors; actions++) {
 #         solution[row*num_cols + col] = actions;
