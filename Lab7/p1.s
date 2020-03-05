@@ -34,13 +34,11 @@ else:
 	lw		$a0, 8($s0)			# trav->right
 	jal		find_payment		# find_payment(trav->right)
 	lbu		$t0, 12($s0)		# trav->value
-	add		$v0, $v0, $s1		# value = payment_right + payment_left + payment_center
-	add		$v0, $v0, $t0		# value = payment_right + payment_left + payment_center + trav->value
-	addi	$t0, $zero, 2		# $t0 = $zero + 2
-	div		$v0, $t0			# value / 2
-	mflo	$v0					# floor(value / 2)
+	add		$v0, $v0, $s1		# value = payment_left + payment_center + payment_right
+	add		$v0, $v0, $t0		# value = payment_left + payment_center + payment_right + trav->value
+	srl		$v0, $v0, 1			# value >> 1
 	lw		$ra, 0($sp)
 	lw		$s0, 4($sp)
 	lw		$s1, 8($sp)
 	addi	$sp, $sp, 12
-	jr		$ra					# jump to $ra
+	jr		$ra
