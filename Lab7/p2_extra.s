@@ -18,6 +18,8 @@ PRINT_INT               = 1
 #         }
 #     }
 # }
+.globl zero_board:
+zero_board:
 .globl solver_zero_board
 solver_zero_board:
     ## Variables corresponding to registers:
@@ -68,6 +70,8 @@ solver_zero_board:
 #     }
 #     return true;
 # }
+.globl board_done
+board_done:
 .globl solver_board_done
 solver_board_done:
     ## Variables corresponding to registers:
