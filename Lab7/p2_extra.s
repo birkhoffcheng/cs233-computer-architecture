@@ -21,7 +21,6 @@ PRINT_INT               = 1
 
 .globl zero_board
 zero_board:
-    move $0, $0
 .globl solver_zero_board
 solver_zero_board:
     ## Variables corresponding to registers:
