@@ -17,7 +17,7 @@ module timer(TimerInterrupt, cycle, TimerAddress,
 	//		to prevent an interrupt being raised the very first cycle
 	alu32 main_alu(alu_out,,, 3'h0, cycle_counter_out, 32'b1);
 	register cycle_counter(cycle_counter_out, alu_out, clock, 1'b1, reset);
-	register interrupt_cycle(interrupt_cycle_out, data, clock, TimerWrite, reset);
+	register #(32, 32'hffffffff) interrupt_cycle(interrupt_cycle_out, data, clock, TimerWrite, reset);
 	tristate cycle_tristate(cycle, cycle_counter_out, TimerRead);
 	dffe interrupt_line(TimerInterrupt, 1'b1, clock, interrupt_cycle_out == cycle_counter_out, acknowledge | reset);
 endmodule
