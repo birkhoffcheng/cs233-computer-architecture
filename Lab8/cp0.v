@@ -1,5 +1,5 @@
-`define STATUS_REGISTER 5'd12
-`define CAUSE_REGISTER  5'd13
+`define STATUS_REGISTER	5'd12
+`define CAUSE_REGISTER	5'd13
 `define EPC_REGISTER	5'd14
 
 module cp0(rd_data, EPC, TakenInterrupt, wr_data, regnum, next_pc, MTC0, ERET, TimerInterrupt, clock, reset);
