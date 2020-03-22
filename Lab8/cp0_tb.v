@@ -78,8 +78,7 @@ module cp0_test;
 
     // it's gonna be a lot easier to verify (and debug) your circuit using gtkwave
     // trust me on this one
-    /*
+
     initial
         $monitor("At time %3t, regnum = %2d wr_data = 0x%x next_pc = 0x%x TimerInterrupt = %b MTC0 = %b ERET = %b rd_data = 0x%x EPC = 0x%x TakenInterrupt = %b", $time, regnum, wr_data, next_pc, TimerInterrupt, MTC0, ERET, rd_data, EPC, TakenInterrupt);
-	*/
 endmodule
