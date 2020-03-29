@@ -48,7 +48,6 @@ solution: .byte 0:256
 has_puzzle: .word 0
 times_up: .word 0
 flashlight_space: .word 0
-bonked: .word 0
 scanner_wb: .byte 0 0 0 0
 
 .text
@@ -64,31 +63,36 @@ main:
 	sw		$0, ANGLE
 	li		$t0, 1
 	sw		$t0, ANGLE_CONTROL
-	lw		$t1, BOT_X
 	li		$t0, 10
 	sw		$t0, VELOCITY
+	li		$t1, 12
 walk_one_unit_right:
 	lw		$t0, BOT_X
-	beq		$t0, $t1, walk_one_unit_right
+	blt		$t0, $t1, walk_one_unit_right
 	li		$t0, 90
 	sw		$t0, ANGLE
 	li		$t0, 1
 	sw		$t0, ANGLE_CONTROL
+	li		$t2, 308
 walk_all_the_way_down:
-	la		$t0, bonked
-	beq		$t0, $0, walk_all_the_way_down
-	sw		$0, 0($t0)
+	lw		$t0, BOT_Y
+	blt		$t0, $t2, walk_all_the_way_down
 	sw		$0, ANGLE
 	li		$t0, 1
 	sw		$t0, ANGLE_CONTROL
+	li		$t1, 316
 walk_all_the_way_right:
-	la		$t0, bonked
-	beq		$t0, $0, walk_all_the_way_right
+	lw		$t0, BOT_X
+	blt		$t0, $t1, walk_all_the_way_right
 	li		$t0, 90
 	sw		$t0, ANGLE
 	li		$t0, 1
 	sw		$t0, ANGLE_CONTROL
-	j		shoot_once
+	jal		shoot_one_udp_packet
+	li		$t0, 220
+	sw		$t0, ANGLE
+	li		$t0, 1
+	sw		$t0, ANGLE_CONTROL
 infinite_loop:
 	lw		$t3, BOT_X
 	bne		$t3, $t1, scan
@@ -104,18 +108,18 @@ enough_bytecoins_1:
 	la		$t4, scanner_wb
 	sw		$t4, USE_SCANNER
 	lb		$t4, 2($t4)
-	andi	$t0, $t4, 1
+	andi	$t0, $t4, WALL_MASK
 	beq		$t0, $0, shoot
-	li		$t0, 5
+	li		$t0, -1
 	sw		$t0, ANGLE
 	sw		$0, ANGLE_CONTROL
 	j		continue
 shoot:
-	li		$t0, 2
+	li		$t0, HOST_MASK
 	beq		$t0, $t4, shoot_once
-	andi	$t0, $t4, 16
+	andi	$t0, $t4, PLAYER_MASK
 	bne		$t0, $0, shoot_once
-	andi	$t0, $t4, 8
+	andi	$t0, $t4, ENEMY_MASK
 	bne		$t0, $0, shoot_twice
 	j		continue
 shoot_twice:
@@ -135,7 +139,10 @@ shoot_one_udp_packet:	# void shoot_one_udp_packet()
 	lw		$t0, GET_BYTECOINS	# test if we have enough bytecoins
 	li		$t4, 50
 	bge		$t0, $t4, enough_bytecoins
+	sw		$0, VELOCITY
 	jal		solve_puzzle
+	li		$t0, 10
+	sw		$t0, VELOCITY
 enough_bytecoins:
 	sw		$0, SHOOT_UDP_PACKET
 	lw		$ra, 0($sp)
@@ -145,7 +152,6 @@ enough_bytecoins:
 solve_puzzle:	# void solve_puzzle()
 	sub		$sp, $sp, 4
 	sw		$ra, 0($sp)
-	sw		$0, VELOCITY
 	la		$t0, puzzle
 	sw		$t0, REQUEST_PUZZLE
 request_puzzle_loop:
@@ -160,8 +166,6 @@ request_puzzle_loop:
 	jal		solve
 	la		$a1, solution
 	sw		$a1, SUBMIT_SOLUTION
-	li		$t0, 10
-	sw		$t0, VELOCITY
 	lw		$ra, 0($sp)
 	add		$sp, $sp, 4
 	jr		$ra
@@ -792,10 +796,7 @@ interrupt_dispatch:				 # Interrupt:
 
 bonk_interrupt:
 	sw		$0, BONK_ACK
-	la		$k0, bonked
-	addi	$t0, $0, 1
-	sw		$t0, 0($k0)
-	addi	$k0, $0, -15
+	addi	$k0, $0, -40
 	sw		$k0, ANGLE
 	sw		$0, ANGLE_CONTROL
 	addi	$k0, $0, 10
