@@ -95,12 +95,16 @@ walk_all_the_way_right:
 	sw		$t0, ANGLE_CONTROL
 infinite_loop:
 	lw		$t3, BOT_X
+	srl		$t3, $t3, 3
 	bne		$t3, $t1, scan
 	lw		$t3, BOT_Y
+	srl		$t3, $t3, 3
 	beq		$t3, $t2, continue
 scan:
 	lw		$t1, BOT_X
+	srl		$t1, $t1, 3
 	lw		$t2, BOT_Y
+	srl		$t2, $t2, 3
 	lw		$t0, GET_BYTECOINS	# test if we have enough bytecoins
 	bgt		$t0, $0, enough_bytecoins_1
 	jal		solve_puzzle
