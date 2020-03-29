@@ -60,6 +60,7 @@ main:
 	or		$t4, $t4, REQUEST_PUZZLE_INT_MASK	# puzzle interrupt bit
 	or		$t4, $t4, 1 # global enable
 	mtc0	$t4, $12
+	li		$t4, 0
 	sw		$0, ANGLE
 	li		$t0, 1
 	sw		$t0, ANGLE_CONTROL
@@ -99,11 +100,12 @@ infinite_loop:
 	bne		$t3, $t1, scan
 	lw		$t3, BOT_Y
 	srl		$t3, $t3, 3
-	beq		$t3, $t2, continue
+	bne		$t3, $t2, scan
+	beq		$t5, $0, continue
 scan:
 	lw		$t1, BOT_X
-	srl		$t1, $t1, 3
 	lw		$t2, BOT_Y
+	srl		$t1, $t1, 3
 	srl		$t2, $t2, 3
 	lw		$t0, GET_BYTECOINS	# test if we have enough bytecoins
 	bgt		$t0, $0, enough_bytecoins_1
@@ -114,7 +116,7 @@ enough_bytecoins_1:
 	lb		$t4, 2($t4)
 	andi	$t0, $t4, WALL_MASK
 	beq		$t0, $0, shoot
-	li		$t0, -1
+	li		$t0, 1
 	sw		$t0, ANGLE
 	sw		$0, ANGLE_CONTROL
 	j		continue
@@ -125,6 +127,13 @@ shoot:
 	bne		$t0, $0, shoot_once
 	andi	$t0, $t4, ENEMY_MASK
 	bne		$t0, $0, shoot_twice
+	li		$t0, 15
+	sw		$t0, ANGLE
+	sw		$0, ANGLE_CONTROL
+	add		$t5, $t5, 15
+	li		$t0, 360
+	div		$t5, $t0
+	mfhi	$t5
 	j		continue
 shoot_twice:
 	jal		shoot_one_udp_packet
@@ -800,7 +809,7 @@ interrupt_dispatch:				 # Interrupt:
 
 bonk_interrupt:
 	sw		$0, BONK_ACK
-	addi	$k0, $0, -40
+	addi	$k0, $0, 40
 	sw		$k0, ANGLE
 	sw		$0, ANGLE_CONTROL
 	addi	$k0, $0, 10
