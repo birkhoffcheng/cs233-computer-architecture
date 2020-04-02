@@ -1,0 +1,55 @@
+-------------------------------------------------------------------------
+
+./cachesim trace_files/gcc-trace data_files/gcc-trace-data 65536 64 2 0 0
+Accesses: 770176, Hits: 764185, Hit rate: 99.2221%
+Memory reads: 2941, Memory writes: 150727
+
+./cachesim trace_files/gcc-trace data_files/gcc-trace-data 65536 64 2 0 1
+Accesses: 770176, Hits: 767157, Hit rate: 99.6080%
+Memory reads: 3019, Memory writes: 150727
+
+./cachesim trace_files/gcc-trace data_files/gcc-trace-data 65536 64 2 1 0
+Accesses: 770176, Hits: 764185, Hit rate: 99.2221%
+Memory reads: 2941, Memory writes: 3373
+
+./cachesim trace_files/gcc-trace data_files/gcc-trace-data 65536 64 2 1 1
+Accesses: 770176, Hits: 767157, Hit rate: 99.6080%
+Memory reads: 3019, Memory writes: 424
+
+-------------------------------------------------------------------------
+
+./cachesim trace_files/gcc-trace data_files/gcc-trace-data 1024 64 2 0 0
+Accesses: 770176, Hits: 725078, Hit rate: 94.1445%
+Memory reads: 29304, Memory writes: 150727
+
+./cachesim trace_files/gcc-trace data_files/gcc-trace-data 1024 64 2 0 1
+Accesses: 770176, Hits: 738955, Hit rate: 95.9463%
+Memory reads: 31221, Memory writes: 150727
+
+./cachesim trace_files/gcc-trace data_files/gcc-trace-data 1024 64 2 1 0
+Accesses: 770176, Hits: 725078, Hit rate: 94.1445%
+Memory reads: 29304, Memory writes: 22600
+
+./cachesim trace_files/gcc-trace data_files/gcc-trace-data 1024 64 2 1 1
+Accesses: 770176, Hits: 738955, Hit rate: 95.9463%
+Memory reads: 31221, Memory writes: 8884
+
+-------------------------------------------------------------------------
+
+./cachesim trace_files/gcc-trace data_files/gcc-trace-data 1024 64 1 0 0
+Accesses: 770176, Hits: 694426, Hit rate: 90.1646%
+Memory reads: 54367, Memory writes: 150727
+
+./cachesim trace_files/gcc-trace data_files/gcc-trace-data 1024 64 1 0 1
+Accesses: 770176, Hits: 707117, Hit rate: 91.8124%
+Memory reads: 63059, Memory writes: 150727
+
+./cachesim trace_files/gcc-trace data_files/gcc-trace-data 1024 64 1 1 0
+Accesses: 770176, Hits: 694426, Hit rate: 90.1646%
+Memory reads: 54367, Memory writes: 32928
+
+./cachesim trace_files/gcc-trace data_files/gcc-trace-data 1024 64 1 1 1
+Accesses: 770176, Hits: 707117, Hit rate: 91.8124%
+Memory reads: 63059, Memory writes: 18702
+
+-------------------------------------------------------------------------
