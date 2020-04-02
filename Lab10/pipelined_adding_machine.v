@@ -8,10 +8,8 @@ module pipelined_adding_machine(out, clk, reset);
     // or the test bench will break
     register #(30, 30'd0) Counter(index, next_index, clk, /* enable */1'b1, reset);
     adder30 Adder(next_index, index, 30'h1);
-
+    register #(32, 32'd0) pipeline_data_2(data_2, data, clk, 1'b1, reset);
     adding_machine_memory rom(data, index);
-    alu32 alu(next_data, , `ALU_ADD, out, data);
-
+    alu32 alu(next_data, , `ALU_ADD, out, data_2);
     register #(32, 32'd0) Register(out, next_data, clk, /* enable */1'b1, reset);
-
 endmodule // pipelined_machine
