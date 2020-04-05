@@ -25,7 +25,7 @@ module pipelined_machine(clk, reset);
 
 	assign PC[1:0] = 2'b0;  // bottom bits hard coded to 00
 	adder30 next_PC_adder(PC_plus4, PC[31:2], 30'h1);
-	register #(30) pc_plus4_pipeline_reg(PC_plus4_DE, PC_plus4, clk, ~stall, reset);
+	register #(30) pc_plus4_pipeline_reg(PC_plus4_DE, PC_plus4, clk, ~stall, reset | PCSrc);
 	adder30 target_PC_adder(PC_target, PC_plus4_DE, imm[29:0]);
 	mux2v #(30) branch_mux(next_PC, PC_plus4, PC_target, PCSrc);
 	assign PCSrc = BEQ & zero;
@@ -33,7 +33,7 @@ module pipelined_machine(clk, reset);
 	// DO NOT comment out or rename this module
 	// or the test bench will break
 	instruction_memory imem(inst_IF, PC[31:2]);
-	register #(32) inst_pipeline_reg(inst, inst_IF, clk, ~stall, reset);
+	register #(32) inst_pipeline_reg(inst, inst_IF, clk, ~stall, reset | PCSrc);
 	mips_decode decode(ALUOp, RegWrite, BEQ, ALUSrc, MemRead, MemWrite, MemToReg, RegDst, opcode, funct);
 
 	// DO NOT comment out or rename this module
