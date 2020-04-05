@@ -1,7 +1,7 @@
 module test;
    /* Make a regular pulsing clock. */
    reg       clk = 0;
-   always #6 clk = !clk;
+   always #2 clk = !clk;
    integer   i;
 
    reg       reset = 1, done = 0;
