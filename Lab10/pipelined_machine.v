@@ -25,7 +25,7 @@ module pipelined_machine(clk, reset);
 
 	assign PC[1:0] = 2'b0;  // bottom bits hard coded to 00
 	adder30 next_PC_adder(PC_plus4, PC[31:2], 30'h1);
-	register #(30) pc_plus4_pipeline_reg(PC_plus4_DE, PC_plus4, clk, ~stall, reset | PCSrc);
+	register #(30, 30'h100000) pc_plus4_pipeline_reg(PC_plus4_DE, PC_plus4, clk, ~stall, reset | PCSrc);
 	adder30 target_PC_adder(PC_target, PC_plus4_DE, imm[29:0]);
 	mux2v #(30) branch_mux(next_PC, PC_plus4, PC_target, PCSrc);
 	assign PCSrc = BEQ & zero;
