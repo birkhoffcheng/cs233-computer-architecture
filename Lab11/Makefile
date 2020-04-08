@@ -1,11 +1,11 @@
 GTEST_DIR := gtest-1.8.0
 GTEST_LIB := $(GTEST_DIR)/make/gtest_main.a
 
-CXX = clang++
+CXX = c++
 CPPFLAGS = -isystem $(GTEST_DIR)/include
 CXXFLAGS = -g -Wall -Werror -Wno-unused-parameter -Wno-unused-private-field -std=c++11
 LD = $(CXX)
-LDFLAGS = 
+LDFLAGS =
 
 .PHONY: all clean
 
